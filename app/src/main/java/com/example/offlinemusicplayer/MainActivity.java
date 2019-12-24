@@ -1,18 +1,22 @@
 package com.example.offlinemusicplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -24,12 +28,15 @@ import org.jsoup.select.Elements;
 
 public class MainActivity extends AppCompatActivity {
     public String url;
+
+    ArrayList<String> songTitlesArray = new ArrayList<String>();
+    ArrayList<String> songAuthorsArray = new ArrayList<String>();
+    ArrayList<String> downloadsArray = new ArrayList<String>();
+    ArrayList<String> durationsArray = new ArrayList<String>();
+
     class FetchWebsiteData extends AsyncTask<Void, Void, Void> {
         String websiteTitle;
         Elements songTitles, songAuthors, durations, downloads;
-        ArrayList<String> songTitlesArray, songAuthorsArray, durationsArray,
-                          downloadsArray = new ArrayList<String>();
-
         @Override
         protected void onPreExecute() {
             //progress dialog
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             for (Element duration : durations) {
 //////                Toast.makeText(getApplication().getBaseContext(), duration.text(), Toast.LENGTH_LONG).show();
 //////                break;
-                songAuthorsArray.set(counter, (songAuthors.get(counter).text()));
+                songAuthorsArray.add(songAuthors.get(counter).text());
                 songTitlesArray.add(songTitles.get(counter).text());
                 downloadsArray.add(downloads.get(counter).attr("href"));
                 durationsArray.add(duration.text());
@@ -99,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 new FetchWebsiteData().execute();
+                LinearLayout songsLinearLayout = (LinearLayout) findViewById(R.id.songsLinerLayout);
+                TextView dynamicTextView = new TextView(getApplicationContext());
+                dynamicTextView.setText(songAuthorsArray.get(0));
+//
+                songsLinearLayout.addView(dynamicTextView);
+
                 return false;
             }
 
