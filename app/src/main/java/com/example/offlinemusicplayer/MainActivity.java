@@ -106,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 new FetchWebsiteData().execute();
-                LinearLayout songsLinearLayout = (LinearLayout) findViewById(R.id.songsLinerLayout);
-                TextView dynamicTextView = new TextView(getApplicationContext());
-                dynamicTextView.setText(songAuthorsArray.get(0));
-//
-                songsLinearLayout.addView(dynamicTextView);
+//                LinearLayout songsLinearLayout = (LinearLayout) findViewById(R.id.songsLinerLayout);
+//                TextView dynamicTextView = new TextView(getApplicationContext());
+//                dynamicTextView.setText(songAuthorsArray.get(0));
+////
+//                songsLinearLayout.addView(dynamicTextView);
 
                 return false;
             }
